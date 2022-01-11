@@ -18,22 +18,22 @@ class CarService{
     fileprivate init(){}
     
     
-    func getCarList(sortType : Int , sortDirection : Int , minDate : String , maxDate : String , minYear : Int , maxYear : Int , skip : Int , take : String , completion : @escaping ([CarListModel]? , Bool)-> Void ){
+    func getCarList(sortType : Int? , sortDirection : Int? , minDate : String? , maxDate : String? , minYear : Int? , maxYear : Int? , skip : Int , take : Int , completion : @escaping ([CarListModel]? , Bool)-> Void ){
         
         var params = [String:Any]()
-//        params["sort"] = sortType
-//        params["sortDirection"] = sortDirection
+        params["sort"] = sortType
+        params["sortDirection"] = sortDirection
         params["take"] = take
-//        params["skip"] = skip
-//        params["minYear"] = minYear
-//        params["maxYear"] = maxYear
-//        params["minDate"] = minDate
-//        params["maxDate"] = maxDate
+        params["skip"] = skip
+        params["minYear"] = minYear
+        params["maxYear"] = maxYear
+        params["minDate"] = minDate
+        params["maxDate"] = maxDate
         
-        AF.request("http://sandbox.arabamd.com/api/v1/listing?take=5",
+        AF.request("http://sandbox.arabamd.com/api/v1/listing",
                    method: .get,
-                   parameters: nil,
-                   encoding: JSONEncoding.default).responseJSON { response in
+                   parameters: params,
+                   encoding: URLEncoding.queryString).responseJSON { response in
             
             if response.data != nil && response.error == nil{
                 guard let data = response.value as? [[String:Any]] else{

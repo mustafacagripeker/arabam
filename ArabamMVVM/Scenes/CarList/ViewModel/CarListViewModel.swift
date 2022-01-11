@@ -11,12 +11,12 @@ import Foundation
 
 class CarListViewModel : NSObject{
     
-    var sortType = Int()
-    var sortDirection = Int()
-    var minDate = String()
-    var maxDate = String()
-    var minYear = Int()
-    var maxYear = Int()
+    var sortType : Int?
+    var sortDirection : Int?
+    var minDate : String?
+    var maxDate : String?
+    var minYear : Int?
+    var maxYear : Int?
     var skip = Int()
     var take = Int()
     
@@ -29,7 +29,7 @@ class CarListViewModel : NSObject{
                                      minYear: minYear,
                                      maxYear: maxYear,
                                      skip: skip,
-                                     take: "5") { cars, success in
+                                     take: 5) { cars, success in
             if success{
                 completion(cars)
             }

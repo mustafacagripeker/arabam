@@ -25,8 +25,9 @@ class CarListViewController: UIViewController {
         carListTableView.dataSource = self
         
         
-        let rightButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonClicked(_:)))
-        self.navigationItem.rightBarButtonItems = [rightButton]
+        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonClicked(_:)))
+        let sortButton = UIBarButtonItem(image: UIImage(named: "location"), style: .plain, target: self, action: #selector(filterButtonClicked(_:)))
+        self.navigationItem.rightBarButtonItems = [filterButton,sortButton]
         title = "Araba Listesi"
         
         carListVM.getCars { cars in
