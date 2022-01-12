@@ -20,15 +20,10 @@ class CarListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        carListTableView.register(UINib(nibName: "CarListTableViewCell", bundle: nil), forCellReuseIdentifier: "CarListTableViewCell")
-        carListTableView.delegate = self
-        carListTableView.dataSource = self
+        initNavBarSettings()
+        initTableViewSettings()
         
         
-        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonClicked(_:)))
-        let sortButton = UIBarButtonItem(image: UIImage(named: "location"), style: .plain, target: self, action: #selector(filterButtonClicked(_:)))
-        self.navigationItem.rightBarButtonItems = [filterButton,sortButton]
-        title = "Araba Listesi"
         
         carListVM.getCars { cars in
             self.carArray.append(contentsOf: cars ?? [])
@@ -36,15 +31,40 @@ class CarListViewController: UIViewController {
         }
     }
     
-    @objc func filterButtonClicked(_ sender: UIBarButtonItem) {
-
-        let vc = UIStoryboard(name: "CarListStoryboard", bundle: nil).instantiateViewController(withIdentifier: "filter") as? FilterViewController
-        
+    
+    func initNavBarSettings(){
+        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonClicked(_:)))
+        let sortButton = UIBarButtonItem(image: UIImage(named: "sort"), style: .plain, target: self, action: #selector(sortButtonClicked(_:)))
+        filterButton.imageInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0, right: 0)
+        sortButton.imageInsets = UIEdgeInsets(top: 0.0, left: 25, bottom: 0, right: 0)
+        self.navigationItem.rightBarButtonItems = [filterButton,sortButton]
+        title = "Araba Listesi"
+    }
+    
+    
+    func initTableViewSettings(){
+        carListTableView.register(UINib(nibName: "CarListTableViewCell", bundle: nil), forCellReuseIdentifier: "CarListTableViewCell")
+        carListTableView.delegate = self
+        carListTableView.dataSource = self
+    }
+    
+    
+    @objc func sortButtonClicked(_ sender: UIBarButtonItem) {
+        let vc = UIStoryboard(name: "CarListStoryboard", bundle: nil).instantiateViewController(withIdentifier: "pickerView") as? PickerViewController
         guard let vc = vc else{
             return
         }
         
         self.present(vc, animated: false)
+    }
+    
+    @objc func filterButtonClicked(_ sender : UIBarButtonItem){
+        let vc = UIStoryboard(name: "CarListStoryboard", bundle: nil).instantiateViewController(withIdentifier: "filterVC") as? FilterViewController
+        guard let vc = vc else{
+            return
+        }
+        
+        navigationController?.pushViewController(vc, animated: false)
     }
 
 }
@@ -67,6 +87,12 @@ extension CarListViewController : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: "CarDetailStoryboard", bundle: nil).instantiateViewController(withIdentifier: "CarDetailViewController") as! CarDetailViewController
+        vc.carId = carArray[indexPath.row].id
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     

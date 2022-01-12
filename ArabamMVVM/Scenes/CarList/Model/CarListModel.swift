@@ -77,6 +77,30 @@ enum PhotoSize : CustomStringConvertible{
 }
 
 
+enum SortTypesStringValue : CustomStringConvertible {
+    case GelişmişSıralama
+    case FiyatınaGöreArtan
+    case FiyatınaGöreAzalan
+    case YılaGöreYenidenEskiye
+    case YılaGöreEskidenYeniye
+    case TariheGöreYenidenEskiye
+    case TariheGöreEskidenYeniye
+    
+    var description: String{
+        switch self{
+        case .GelişmişSıralama : return "Gelişmiş Sıralama"
+        case .FiyatınaGöreArtan : return "Fiyat - Ucuzdan Pahalıya"
+        case .FiyatınaGöreAzalan : return "Fiyat - Pahalıdan Ucuza"
+        case .YılaGöreYenidenEskiye : return "Yıl - Yeniden Eskiye"
+        case .YılaGöreEskidenYeniye : return "Yıl - Eskiden Yeniye"
+        case .TariheGöreYenidenEskiye : return "Tarih - Yeniden Eskiye"
+        case .TariheGöreEskidenYeniye : return "Tarih - Eskiden Yeniye"
+        }
+    }
+    
+}
+
+
 
 
 

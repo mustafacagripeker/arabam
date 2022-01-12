@@ -55,6 +55,36 @@ class CarService{
     }
     
     
+    func getCarDetails(carId : Int , completion : @escaping (CarDetailModel?,Bool) -> Void){
+        
+        var params = [String:Any]()
+        params["id"] = carId
+        
+        
+        AF.request("http://sandbox.arabamd.com/api/v1/detail", method: .get,
+                   parameters: params,
+                   encoding: URLEncoding.queryString).responseJSON { response in
+            
+            if response.data != nil && response.error == nil {
+                guard let data = response.value as? [String:Any] else{
+                    completion(nil,false)
+                    return
+                }
+                do{
+                    let json = try JSONSerialization.data(withJSONObject: data)
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let carDetails = try decoder.decode(CarDetailModel.self, from: json)
+                    completion(carDetails , true)
+                    
+                }catch{
+                    completion(nil,true)
+                }
+            }
+        }
+    }
+    
+    
     
     
     
