@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import WebKit
 
 class CarDetailViewController: UIViewController {
     
@@ -21,7 +22,7 @@ class CarDetailViewController: UIViewController {
     var detailVM = CarDetailViewModel()
     
     
-    var selectedIndexForTableView = Int()
+    var selectedIndexForTableView = 0
     var carId = Int()
     var carDetail : CarDetailModel?
     var detailTypeArray = [DetailType]()
@@ -31,7 +32,6 @@ class CarDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         detailTypeArray = [.Price,
                            .City,
                            .County,
@@ -73,7 +73,7 @@ class CarDetailViewController: UIViewController {
                 case .Model:
                     self.detailValueArray.append(details?.modelName ?? "")
                 case .Year:
-                    self.detailValueArray.append(details?.properties[2].value ?? "")
+                    self.detailValueArray.append(findProperties(properties: details?.properties ?? [], key: "year"))
                 case .Km:
                     self.detailValueArray.append(details?.properties[0].value ?? "")
                 case .Color:
@@ -98,11 +98,18 @@ class CarDetailViewController: UIViewController {
         }
     }
     
+    func findProperties(properties : [Properties] , key : String)-> String{
+        let property = properties.first { p in p.name == key }
+        return property?.value ?? ""
+    }
+    
     func setTableViewSettings(){
         tableViewHeightConstraint.constant = CGFloat(detailTypeArray.count * 50)
         informationTableViewCell.register(UINib(nibName: "CarDetailTableViewCell", bundle: nil), forCellReuseIdentifier: "CarDetailTableViewCell")
         informationTableViewCell.delegate = self
         informationTableViewCell.dataSource = self
+        
+        informationTableViewCell.register(UINib(nibName: "CarDetailDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "CarDetailDescriptionTableViewCell")
     }
     
     func setCollectionViewSettings(){
@@ -116,12 +123,14 @@ class CarDetailViewController: UIViewController {
         carExplanationButton.addTapGesture {
             self.carExplanationButton.backgroundColor  = UIColor(hexString: "C7C7CC")
             self.carDetailButton.backgroundColor = .white
-            self.selectedIndexForTableView = 0
+            self.selectedIndexForTableView = 1
+            self.informationTableViewCell.reloadData()
         }
         carDetailButton.addTapGesture {
             self.carExplanationButton.backgroundColor = .white
             self.carDetailButton.backgroundColor = UIColor(hexString: "C7C7CC")
-            self.selectedIndexForTableView = 1
+            self.selectedIndexForTableView = 0
+            self.informationTableViewCell.reloadData()
         }
     }
 }
@@ -145,6 +154,12 @@ extension CarDetailViewController : UICollectionViewDelegate , UICollectionViewD
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: "CarDetailStoryboard", bundle: nil).instantiateViewController(withIdentifier: "imageSliderVC") as! CarDetailsImageViewController
+        vc.images = carDetail?.photos ?? []
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         self.imageSliderPageController.currentPage = indexPath.row
     }
@@ -152,24 +167,42 @@ extension CarDetailViewController : UICollectionViewDelegate , UICollectionViewD
 
 extension CarDetailViewController : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.detailValueArray.count
+        if self.selectedIndexForTableView == 1 {
+            return 1
+        }else{
+            return self.detailValueArray.count
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CarDetailTableViewCell", for: indexPath) as? CarDetailTableViewCell else {
-            return UITableViewCell()
+        if self.selectedIndexForTableView == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CarDetailTableViewCell", for: indexPath) as? CarDetailTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.bind(key: self.detailTypeArray[indexPath.row].description, value: self.detailValueArray[indexPath.row])
+            if (indexPath.row) % 2 == 0{
+                cell.CarDetailBackgroundView.backgroundColor = UIColor.init(hexString: "C7C7CC")
+            }else{
+                cell.CarDetailBackgroundView.backgroundColor = .white
+            }
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CarDetailDescriptionTableViewCell") as! CarDetailDescriptionTableViewCell
+            cell.bind(htmlString: self.carDetail?.text ?? "")
+            return cell
         }
         
-        cell.bind(key: self.detailTypeArray[indexPath.row].description, value: self.detailValueArray[indexPath.row])
-        if indexPath.row % 2 == 0{
-            cell.CarDetailBackgroundView.backgroundColor = UIColor.init(hexString: "C7C7CC")
-        }
-    
-        return cell
     }
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        if self.selectedIndexForTableView == 0{
+            return 50
+        }else{
+            return tableView.frame.height
+        }
+        
     }
     
     

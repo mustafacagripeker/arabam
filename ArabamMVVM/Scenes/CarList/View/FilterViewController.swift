@@ -16,30 +16,61 @@ class FilterViewController: UIViewController {
     
     let datePicker = UIDatePicker()
     
+    var carListVM = CarListViewModel()
+    
+    var filterOptions = FilterOptions()
+    
+    var delegate : FilterDelegate?
     
     var minDateStr : String?
     var maxDateStr : String?
+    var minYearStr : Int?
+    var maxYearStr : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
         createDatePicker(sender: minimumDateTextField)
         createDatePicker(sender: maximumDateTextField)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        maximumDateTextField.text = UserDefaults.standard.string(forKey: "maxd")
+        minimumDateTextField.text = UserDefaults.standard.string(forKey: "mind")
+        
+        maximumYearTextField.text = UserDefaults.standard.string(forKey: "maxy")
+        minimumYearTextField.text = UserDefaults.standard.string(forKey: "miny")
+    }
+    
     @IBAction func applyFilterAction(_ sender: Any) {
+        filterOptions.minDate = minDateStr
+        filterOptions.maxDate = maxDateStr
+        filterOptions.minYear = NumberFormatter().number(from: minimumYearTextField.text ?? "0") as? Int
+        filterOptions.maxYear = NumberFormatter().number(from: maximumYearTextField.text ?? "0") as? Int
+        delegate?.filterApplyed(filterOptions: filterOptions)
+        UserDefaults.standard.set(minimumYearTextField.text, forKey: "miny")
+        UserDefaults.standard.set(maximumYearTextField.text, forKey: "maxy")
+        UserDefaults.standard.set(minimumDateTextField.text, forKey: "mind")
+        UserDefaults.standard.set(maximumDateTextField.text, forKey: "maxd")
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func removeFilterAction(_ sender: Any) {
-        minDateStr = ""
-        maxDateStr = ""
+        minDateStr = nil
+        maxDateStr = nil
         minimumDateTextField.text = ""
         maximumDateTextField.text = ""
+        filterOptions.minDate = nil
+        filterOptions.maxDate = nil
+        delegate?.filterApplyed(filterOptions: filterOptions)
+        UserDefaults.standard.set(nil, forKey: "miny")
+        UserDefaults.standard.set(nil, forKey: "maxy")
+        UserDefaults.standard.set(nil, forKey: "mind")
+        UserDefaults.standard.set(nil, forKey: "maxd")
+        self.navigationController?.popViewController(animated: true)
+        
     }
-    
-    
 
-   
     func createDatePicker(sender : UITextField){
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -51,9 +82,7 @@ class FilterViewController: UIViewController {
             let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed2))
             toolbar.setItems([doneBtn], animated: true)
         }
-        
-        
-        
+ 
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "tr")
         

@@ -13,25 +13,29 @@ class CarListViewModel : NSObject{
     
     var sortType : Int?
     var sortDirection : Int?
-    var minDate : String?
-    var maxDate : String?
-    var minYear : Int?
-    var maxYear : Int?
     var skip = Int()
-    var take = Int()
+    var take = 10
+    var isLoading = false
+    var finishPagination = false
     
+    var filterOptions : FilterOptions?
 
     func getCars(completion : @escaping ([CarListModel]?)-> Void){
         CarService.shared.getCarList(sortType: sortType,
                                      sortDirection: sortDirection,
-                                     minDate: minDate,
-                                     maxDate: maxDate,
-                                     minYear: minYear,
-                                     maxYear: maxYear,
+                                     minDate: filterOptions?.minDate,
+                                     maxDate: filterOptions?.maxDate,
+                                     minYear: filterOptions?.minYear,
+                                     maxYear: filterOptions?.maxYear,
                                      skip: skip,
-                                     take: 5) { cars, success in
+                                     take: take) { cars, success in
             if success{
                 completion(cars)
+                if cars?.isEmpty == true{
+                    self.finishPagination = true
+                }
+            }else{
+                self.finishPagination = true
             }
         }
     }

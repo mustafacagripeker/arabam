@@ -146,6 +146,43 @@
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="122.54464285714285"/>
         </scene>
+        <!--Car Details Image View Controller-->
+        <scene sceneID="5OA-Mu-REj">
+            <objects>
+                <viewController storyboardIdentifier="imageSliderVC" id="RwQ-jH-w8V" customClass="CarDetailsImageViewController" customModule="ArabamMVVM" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fOc-N1-WtR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tLu-wq-vg6">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ZBz-yE-5Bq">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="HIe-io-Z8O"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HIe-io-Z8O" firstAttribute="trailing" secondItem="tLu-wq-vg6" secondAttribute="trailing" id="d3a-fB-9x7"/>
+                            <constraint firstItem="HIe-io-Z8O" firstAttribute="bottom" secondItem="tLu-wq-vg6" secondAttribute="bottom" id="hQg-tz-5YC"/>
+                            <constraint firstItem="tLu-wq-vg6" firstAttribute="leading" secondItem="HIe-io-Z8O" secondAttribute="leading" id="mEB-vp-mNe"/>
+                            <constraint firstItem="tLu-wq-vg6" firstAttribute="top" secondItem="HIe-io-Z8O" secondAttribute="top" id="wup-8o-ptg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sliderCollectionView" destination="tLu-wq-vg6" id="NAf-al-aOu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="76P-Z3-no4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1021.7391304347827" y="122.54464285714285"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">

@@ -15,6 +15,12 @@
 		9E028105278E50010030F0CF /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E028104278E50010030F0CF /* FilterViewController.swift */; };
 		9E02810A278E62330030F0CF /* ImageSliderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E028108278E62330030F0CF /* ImageSliderCollectionViewCell.swift */; };
 		9E02810B278E62330030F0CF /* ImageSliderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E028109278E62330030F0CF /* ImageSliderCollectionViewCell.xib */; };
+		9E1738A22790A39600A41A8F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1738A12790A39600A41A8F /* LoadingView.swift */; };
+		9E1738A62790A60600A41A8F /* sell.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E1738A52790A60600A41A8F /* sell.json */; };
+		9E1738A82790C85200A41A8F /* CarDetailsImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1738A72790C85200A41A8F /* CarDetailsImageViewController.swift */; };
+		9E1738AC2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1738AA2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.swift */; };
+		9E1738AD2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1738AB2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.xib */; };
+		9E1738AF2790D23C00A41A8F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1738AE2790D23C00A41A8F /* WebKit.framework */; };
 		9E52A5A3278E7F30001CC496 /* CarDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E52A5A1278E7F30001CC496 /* CarDetailTableViewCell.swift */; };
 		9E52A5A4278E7F30001CC496 /* CarDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E52A5A2278E7F30001CC496 /* CarDetailTableViewCell.xib */; };
 		9E9389BE278D1BD700BC460D /* CarListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9389BC278D1BD700BC460D /* CarListTableViewCell.swift */; };
@@ -43,6 +49,12 @@
 		9E028104278E50010030F0CF /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		9E028108278E62330030F0CF /* ImageSliderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSliderCollectionViewCell.swift; sourceTree = "<group>"; };
 		9E028109278E62330030F0CF /* ImageSliderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSliderCollectionViewCell.xib; sourceTree = "<group>"; };
+		9E1738A12790A39600A41A8F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		9E1738A52790A60600A41A8F /* sell.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sell.json; sourceTree = "<group>"; };
+		9E1738A72790C85200A41A8F /* CarDetailsImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsImageViewController.swift; sourceTree = "<group>"; };
+		9E1738AA2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		9E1738AB2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarDetailDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		9E1738AE2790D23C00A41A8F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		9E52A5A1278E7F30001CC496 /* CarDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailTableViewCell.swift; sourceTree = "<group>"; };
 		9E52A5A2278E7F30001CC496 /* CarDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarDetailTableViewCell.xib; sourceTree = "<group>"; };
 		9E9389BC278D1BD700BC460D /* CarListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarListTableViewCell.swift; sourceTree = "<group>"; };
@@ -67,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E1738AF2790D23C00A41A8F /* WebKit.framework in Frameworks */,
 				D9E91E7E63AFF056A4C426E7 /* Pods_ArabamMVVM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,6 +90,7 @@
 		546798210BCBE2B4BA3AE5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E1738AE2790D23C00A41A8F /* WebKit.framework */,
 				79099EE5433AF0194DC6D5C8 /* Pods_ArabamMVVM.framework */,
 			);
 			name = Frameworks;
@@ -96,6 +110,7 @@
 			children = (
 				9E0280F5278E13010030F0CF /* CarDetailStoryboard.storyboard */,
 				9E0280F7278E221D0030F0CF /* CarDetailViewController.swift */,
+				9E1738A72790C85200A41A8F /* CarDetailsImageViewController.swift */,
 				9E028106278E61F40030F0CF /* Cell */,
 			);
 			path = View;
@@ -121,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				9E028102278E335D0030F0CF /* Extensions.swift */,
+				9E1738A12790A39600A41A8F /* LoadingView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -128,6 +144,7 @@
 		9E028106278E61F40030F0CF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				9E1738A92790CCC300A41A8F /* CarDetailDescriptionTableViewCell */,
 				9E52A5A0278E7F01001CC496 /* CarDetailTableViewCell */,
 				9E028107278E620E0030F0CF /* ImageSliderCollectionViewCell */,
 			);
@@ -141,6 +158,15 @@
 				9E028109278E62330030F0CF /* ImageSliderCollectionViewCell.xib */,
 			);
 			path = ImageSliderCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		9E1738A92790CCC300A41A8F /* CarDetailDescriptionTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				9E1738AA2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.swift */,
+				9E1738AB2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.xib */,
+			);
+			path = CarDetailDescriptionTableViewCell;
 			sourceTree = "<group>";
 		};
 		9E52A5A0278E7F01001CC496 /* CarDetailTableViewCell */ = {
@@ -189,6 +215,7 @@
 				9EF1DB39278CC6AD000D8E28 /* Assets.xcassets */,
 				9EF1DB3B278CC6AD000D8E28 /* LaunchScreen.storyboard */,
 				9EF1DB3E278CC6AD000D8E28 /* Info.plist */,
+				9E1738A52790A60600A41A8F /* sell.json */,
 			);
 			path = ArabamMVVM;
 			sourceTree = "<group>";
@@ -335,11 +362,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EF1DB3D278CC6AD000D8E28 /* LaunchScreen.storyboard in Resources */,
+				9E1738A62790A60600A41A8F /* sell.json in Resources */,
 				9EF1DB59278CD9AA000D8E28 /* CarListStoryboard.storyboard in Resources */,
 				9E52A5A4278E7F30001CC496 /* CarDetailTableViewCell.xib in Resources */,
 				9E9389BF278D1BD700BC460D /* CarListTableViewCell.xib in Resources */,
 				9E02810B278E62330030F0CF /* ImageSliderCollectionViewCell.xib in Resources */,
 				9EF1DB3A278CC6AD000D8E28 /* Assets.xcassets in Resources */,
+				9E1738AD2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.xib in Resources */,
 				9E0280F6278E13010030F0CF /* CarDetailStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,11 +424,14 @@
 			files = (
 				9E0280FE278E255D0030F0CF /* CarDetailViewModel.swift in Sources */,
 				9EF1DB57278CD997000D8E28 /* CarListViewController.swift in Sources */,
+				9E1738AC2790CCE800A41A8F /* CarDetailDescriptionTableViewCell.swift in Sources */,
 				9EF1DB31278CC6AB000D8E28 /* AppDelegate.swift in Sources */,
 				9E9389BE278D1BD700BC460D /* CarListTableViewCell.swift in Sources */,
 				9EF1DB62278D01DA000D8E28 /* CarListModel.swift in Sources */,
+				9E1738A22790A39600A41A8F /* LoadingView.swift in Sources */,
 				9EF1DB5E278CEE4F000D8E28 /* CarService.swift in Sources */,
 				9E0280F8278E221D0030F0CF /* CarDetailViewController.swift in Sources */,
+				9E1738A82790C85200A41A8F /* CarDetailsImageViewController.swift in Sources */,
 				9E028105278E50010030F0CF /* FilterViewController.swift in Sources */,
 				9E028103278E335D0030F0CF /* Extensions.swift in Sources */,
 				9E02810A278E62330030F0CF /* ImageSliderCollectionViewCell.swift in Sources */,

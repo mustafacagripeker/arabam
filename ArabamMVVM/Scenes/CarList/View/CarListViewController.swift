@@ -10,11 +10,14 @@ import UIKit
 class CarListViewController: UIViewController {
     
     @IBOutlet var carListTableView: UITableView!
+    @IBOutlet var noDataLabel: UILabel!
     
     
     
     var carListVM = CarListViewModel()
     var carArray = [CarListModel]()
+    
+    
     
 
     override func viewDidLoad() {
@@ -24,11 +27,30 @@ class CarListViewController: UIViewController {
         initTableViewSettings()
         
         
+        loadData()
         
-        carListVM.getCars { cars in
-            self.carArray.append(contentsOf: cars ?? [])
-            self.carListTableView.reloadData()
+    }
+    
+    func loadData(){
+        LoadingView.shared.showActivityIndicator()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.carListVM.isLoading = true
+            self.carListVM.getCars { cars in
+                self.carArray.append(contentsOf: cars ?? [])
+                self.carListTableView.reloadData()
+                self.carListVM.isLoading = false
+                LoadingView.shared.hideActivityIndicator()
+                
+                if self.carArray.isEmpty == true{
+                    self.carListTableView.isHidden = true
+                    self.noDataLabel.isHidden = false
+                }else{
+                    self.carListTableView.isHidden = false
+                    self.noDataLabel.isHidden = true
+                }
+            }
         }
+        
     }
     
     
@@ -54,7 +76,7 @@ class CarListViewController: UIViewController {
         guard let vc = vc else{
             return
         }
-        
+        vc.sortDelegate = self
         self.present(vc, animated: false)
     }
     
@@ -63,7 +85,7 @@ class CarListViewController: UIViewController {
         guard let vc = vc else{
             return
         }
-        
+        vc.delegate = self
         navigationController?.pushViewController(vc, animated: false)
     }
 
@@ -95,6 +117,58 @@ extension CarListViewController : UITableViewDelegate , UITableViewDataSource{
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == self.carArray.count - 1 && !(self.carListVM.isLoading) && !(self.carListVM.finishPagination){
+            self.carListVM.skip = self.carListVM.skip + self.carListVM.take
+            self.loadData()
+        }
+    }
+    
     
 }
 
+extension CarListViewController : FilterDelegate{
+    func filterApplyed(filterOptions: FilterOptions) {
+        self.carListTableView.scroll(to: .top, animated: false)
+        self.carListTableView.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.carArray.removeAll()
+            self.carListTableView.isHidden = false
+        }
+        self.carListVM.filterOptions = filterOptions
+        self.carListVM.skip = 0
+        self.loadData()
+    }
+}
+
+extension CarListViewController : SortDelegate{
+    func sortApplyed(type: Int?, direction: Int?) {
+        self.carListTableView.scroll(to: .top, animated: false)
+        self.carListTableView.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.carArray.removeAll()
+            self.carListTableView.isHidden = false
+        }
+        self.carListVM.sortDirection = direction
+        self.carListVM.sortType = type
+        self.carListVM.skip = 0
+        self.loadData()
+    }
+}
+
+
+struct FilterOptions{
+    var minDate : String?
+    var maxDate : String?
+    var minYear : Int?
+    var maxYear : Int?
+}
+
+
+protocol FilterDelegate{
+    func filterApplyed(filterOptions : FilterOptions)
+}
+
+protocol SortDelegate{
+    func sortApplyed(type : Int?,direction : Int?)
+}

@@ -14,6 +14,8 @@ class PickerViewController: UIViewController {
     var sortTypeArray = [SortTypesStringValue]()
     var selectedSortType : SortTypesStringValue?
     
+    var sortDelegate : SortDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,21 +37,21 @@ class PickerViewController: UIViewController {
         
         switch selectedSortType {
         case.GelişmişSıralama:
-            print("gelişmiş sıralama")
+            sortDelegate?.sortApplyed(type: nil, direction: nil)
         case .FiyatınaGöreArtan:
-            print("fiyatına göre artan")
+            sortDelegate?.sortApplyed(type: 0, direction: 0)
         case .FiyatınaGöreAzalan:
-            print("fiyatına göre azalan")
+            sortDelegate?.sortApplyed(type: 0, direction: 1)
         case .YılaGöreYenidenEskiye:
-            print("yıla göre yeniden eskiye")
+            sortDelegate?.sortApplyed(type: 2, direction: 0)
         case .YılaGöreEskidenYeniye:
-            print("yıla göre eskiden yeniye")
+            sortDelegate?.sortApplyed(type: 2, direction: 1)
         case .TariheGöreYenidenEskiye:
-            print("tarihe göre yeniden eskiye")
+            sortDelegate?.sortApplyed(type: 1, direction: 0)
         case .TariheGöreEskidenYeniye:
-            print("tarihe göre eskiden yeniye")
+            sortDelegate?.sortApplyed(type: 1, direction: 1)
         default:
-            print("gelişmiş sıralama")
+            sortDelegate?.sortApplyed(type: nil, direction: nil)
         }
         
         self.dismiss(animated: false) {
